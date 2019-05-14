@@ -50,12 +50,12 @@ class Parser
     
     
     // TODO: Add the rest of the rules and private variables you will need to use within the class.
-
+    string next_token;
   public:
     string output_filepath;
     void run_program(string);
     
-    string next_token;
+    
 };
 
 #endif /* PARSER_H */
