@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		05061A12228B00DA00AAB85F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05061A11228B00DA00AAB85F /* main.cpp */; };
+		05061A1A228B012700AAB85F /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05061A19228B012700AAB85F /* Parser.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,8 @@
 /* Begin PBXFileReference section */
 		05061A0E228B00DA00AAB85F /* Assignment 2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Assignment 2"; sourceTree = BUILT_PRODUCTS_DIR; };
 		05061A11228B00DA00AAB85F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		05061A19228B012700AAB85F /* Parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
+		05061A1B228B017B00AAB85F /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Parser.h; path = "/Users/fady/Documents/CD/Assignments/Assignment 2/Assignment 2/Assignment 2/Parser.h"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				05061A11228B00DA00AAB85F /* main.cpp */,
+				05061A1B228B017B00AAB85F /* Parser.h */,
+				05061A19228B012700AAB85F /* Parser.cpp */,
 			);
 			path = "Assignment 2";
 			sourceTree = "<group>";
@@ -118,6 +123,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05061A1A228B012700AAB85F /* Parser.cpp in Sources */,
 				05061A12228B00DA00AAB85F /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
