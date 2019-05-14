@@ -48,6 +48,12 @@ void Parser::parse()
 void Parser::program() // program = declaration_list
 {
     // TODO: Call declaration_list() which is grammer rule no. 2
+    //program        = program ID; declaration-list compound-stmt
+    match("program");
+    match("ID");
+    match(";");
+    declaration_list();
+    compound_stmt();
 }
 
 void Parser::type_specifier(){
@@ -177,17 +183,16 @@ void Parser::iteration_stmt(){
 }
 void Parser::selection_stmt(){
     //selection-stmt = if ( expression ) stmt [ else stmt ]
-    if(next_token.substr(0,2) == "if"){
-        match("if");
-        match("(");
-        expression();
-        match(")");
+    match("if");
+    match("(");
+    expression();
+    match(")");
+    stmt();
+    if(next_token.substr(0,4) == "else"){
+        match("else");
         stmt();
-        if(next_token.substr(0,4) == "else"){
-            match("else");
-            stmt();
-        }
     }
+    
 }
 
 void Parser::expression_stmt(){
@@ -214,4 +219,29 @@ void Parser::stmt(){
         compound_stmt();
 }
 
-//var-declaration= type-specifier ID;
+void Parser::var_declaration(){
+    //var-declaration= type-specifier ID;
+    type_specifier();
+    match("ID");
+}
+
+void Parser::compound_stmt(){
+    //compound-stmt    = { { stmt; } }
+    match("{");
+    if (next_token.substr(0,1) == "{"){
+        match("{");
+        stmt();
+        match("}");
+    }
+    match("}");
+}
+
+void Parser::declaration_list(){
+    //declaration-list= var-declaration { var-declaration }
+    var_declaration();
+    if (next_token.substr(0, 1) == "{"){
+        match("{");
+        var_declaration();
+        match("}");
+    }
+}
