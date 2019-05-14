@@ -113,27 +113,24 @@ void Parser::write_var(){
 }
 void Parser::write_stmt(){
     //write-stmt    = write write-var {, write-var};
-    if (next_token.substr(0, 5) == "write"){
-        match("write");
+    match("write");
+    write_var();
+    while(next_token.substr(0, 1) == ","){
+        match(",");
         write_var();
-        while(next_token.substr(0, 1) == ","){
-            match(",");
-            write_var();
-        }
-        match(";");
     }
+    match(";");
 }
 
 void Parser::read_stmt(){
     //read-stmt    = read ID {, ID};
-    if (next_token.substr(0, 5) == "read"){
+    match("read");
+    match("ID");
+    while(next_token.substr(0, 1) == ","){
+        match(",");
         match("ID");
-        while(next_token.substr(0, 1) == ","){
-            match(",");
-            match("ID");
-        }
-        match(";");
     }
+    match(";");
 }
 
 void Parser::term(){
@@ -155,14 +152,8 @@ void Parser::additive_expression(){
 }
 void Parser::expression(){
     //expression = additive-expression [ relop additive-expression ]
-    //Will search for first terminal that expression can lead to, like those
-    //                      ( expression ) | ID | FLOAT | INT
-    if(next_token.substr(0,1) == "(" ||
-       next_token.substr(0,2) == "ID" ||
-       next_token.substr(0,5) == "FLOAT" ||
-       next_token.substr(0,3) == "INT"){
         additive_expression();
-        //again                 relop = <= | < | > | >= | == | !=
+        //relop = <= | < | > | >= | == | !=
         if(next_token.substr(0,2) == "<=" ||
            next_token.substr(0,1) == "<" ||
            next_token.substr(0,1) == ">" ||
@@ -173,7 +164,6 @@ void Parser::expression(){
             relop();
             additive_expression();
         }
-    }
 }
 void Parser::iteration_stmt(){
     //iteration-stmt = while ( expression ) stmt
@@ -194,7 +184,34 @@ void Parser::selection_stmt(){
         match(")");
         stmt();
         if(next_token.substr(0,4) == "else"){
+            match("else");
+            stmt();
         }
-        
     }
 }
+
+void Parser::expression_stmt(){
+    //expression-stmt= let ID = expression
+    match("let");
+    match("ID");
+    match("=");
+    expression();
+}
+
+void Parser::stmt(){
+    //stmt = expression-stmt|selection-stmt|iteration-stmt|read-stmt|write-stmt     | compound-stmt
+    if(next_token.substr(0,3) == "let")
+        expression_stmt();
+    else if(next_token.substr(0,2) == "if")
+        selection_stmt();
+    else if(next_token.substr(0,5) == "while")
+        iteration_stmt();
+    else if(next_token.substr(0,5) == "write")
+        write_stmt();
+    else if(next_token.substr(0,4) == "read")
+        read_stmt();
+    else if(next_token.substr(0,1) == "{")
+        compound_stmt();
+}
+
+//var-declaration= type-specifier ID;
